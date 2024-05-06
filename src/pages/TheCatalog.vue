@@ -23,6 +23,10 @@
 import ItemsGrid from '../components/ItemsGrid/ItemsGrid.vue'
 import BaseSelector from '../components/Base/BaseSelector.vue'
 
+import { useItemsStore } from '../stores/items'
+
+const itemsStore = useItemsStore()
+
 const orderOptions = [
   {
     id: 1,
@@ -63,4 +67,12 @@ const materialOptions = [
     label: 'Metal'
   }
 ]
+
+const handleOrderChange = (value: String) => {
+  console.log(value)
+}
+const handleMaterialChange = (value: String) => {
+  console.log(value)
+  itemsStore.filterItems(value)
+}
 </script>
