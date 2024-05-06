@@ -4,6 +4,11 @@ export const routes: RouteRecordRaw[] = [
   {
     path: '/',
     name: 'home',
-    component: () => import('../components/ItemsGrid/ItemsGrid.vue')
+    redirect: '/catalog'
+  },
+  {
+    path: '/catalog',
+    name: 'catalog',
+    component: () => import('../pages/TheCatalog.vue')
   }
 ]
