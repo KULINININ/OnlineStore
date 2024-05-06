@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 
 import type { ItemData } from '../types/item-data'
-import { ApiEmulator } from '../apiEmulator'
+import { ApiEmulator } from '../components/api/apiEmulator'
 
 const apiEmulator = new ApiEmulator()
 
@@ -15,11 +15,15 @@ export const useItemsStore = defineStore('items', {
       this.loading = true
       this.items = await apiEmulator.getItems()
       this.loading = false
-      console.log(this.items)
     },
     async filterItems(filterBy: String) {
       this.loading = true
       this.items = await apiEmulator.filterItems(filterBy)
+      this.loading = false
+    },
+    async sortItems(orderBy: String) {
+      this.loading = true
+      this.items = await apiEmulator.orderItems(orderBy)
       this.loading = false
     }
   }

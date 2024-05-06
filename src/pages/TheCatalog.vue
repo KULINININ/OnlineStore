@@ -70,6 +70,7 @@ const materialOptions = [
 
 const handleOrderChange = (value: String) => {
   console.log(value)
+  itemsStore.sortItems(value)
 }
 const handleMaterialChange = (value: String) => {
   console.log(value)
