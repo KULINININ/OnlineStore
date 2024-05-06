@@ -8,7 +8,7 @@ const apiEmulator = new ApiEmulator()
 export const useItemsStore = defineStore('items', {
   state: () => ({
     items: [] as ItemData[],
-    loading: true
+    loading: true as Boolean
   }),
   actions: {
     async loadItems() {
