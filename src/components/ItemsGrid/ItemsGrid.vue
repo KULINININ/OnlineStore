@@ -2,11 +2,10 @@
   <div
     class="items-grid grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 text-center m-auto"
   >
-    <div
-      v-for="item in items"
-      :key="item.id"
-      class="items-grid__item-wrapper flex grow"
-    >
+    <div v-if="isLoading" v-for="id in 10" :key="id" class="items-grid__item-wrapper">
+      <ItemCardSkeleton />
+    </div>
+    <div v-else v-for="item in items" :key="item.id" class="items-grid__item-wrapper flex grow">
       <ItemCard :item="item">
         <template v-slot:label>
           <ItemCardLabel :labelText="'Скидка'" />
@@ -32,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { onMounted, computed } from 'vue'
 
 import ItemCard from '../ItemCard/ItemCard.vue'
 import ItemCardLabel from '../ItemCard/ItemCardLabel.vue'
@@ -41,7 +40,17 @@ import ItemCardCode from '../ItemCard/ItemCardCode.vue'
 import ItemCardName from '../ItemCard/ItemCardName.vue'
 import ItemCardFooter from '../ItemCard/ItemCardFooter.vue'
 
-import { items } from '../../api'
+import ItemCardSkeleton from '../Skeletons/ItemCardSkeleton.vue'
+
+import { useItemsStore } from '../../stores/items'
+
+const itemsStore = useItemsStore()
+const items = computed(() => itemsStore.items)
+
+let isLoading = computed(() => {
+  // console.log(itemsStore.loading)
+  return itemsStore.loading
+})
 
 onMounted(() => {
   // console.log(items)
