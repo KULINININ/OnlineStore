@@ -1,7 +1,6 @@
-import type { ItemData } from './types/item-data'
-import type { Material } from './types/materials'
+import type { ItemData } from '../../../types/item-data'
 
-const items: ItemData[] = [
+export const items: ItemData[] = [
   {
     id: '1',
     name: 'Ручка дверная',
@@ -120,49 +119,3 @@ const items: ItemData[] = [
     material: 2
   }
 ]
-
-const materials: Material[] = [
-  {
-    id: 1,
-    name: 'Дерево',
-    value: 'wood'
-  },
-  {
-    id: 2,
-    name: 'Металл',
-    value: 'metal'
-  }
-]
-
-export class ApiEmulator {
-  async getItems(): Promise<ItemData[]> {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(items)
-      }, 500)
-    })
-  }
-
-  async orderItems(): Promise<ItemData[]> {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(items)
-      }, 500)
-    })
-  }
-
-  async filterItems(filterBy: String): Promise<ItemData[]> {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        if (filterBy === 'all') {
-          const filteredItems = items
-          resolve(filteredItems)
-        } else {
-          const material = materials.find((item) => item.value === filterBy)
-          const filteredItems = items.filter((item) => item.material === material?.id)
-          resolve(filteredItems)
-        }
-      }, 500)
-    })
-  }
-}
