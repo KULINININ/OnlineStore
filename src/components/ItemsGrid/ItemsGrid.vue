@@ -48,11 +48,8 @@ const itemsStore = useItemsStore()
 const items = computed(() => itemsStore.items)
 
 let isLoading = computed(() => {
-  // console.log(itemsStore.loading)
   return itemsStore.loading
 })
 
-onMounted(() => {
-  // console.log(items)
-})
+onMounted(() => {})
 </script>
