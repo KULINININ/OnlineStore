@@ -3,7 +3,7 @@
     <div class="selector-label text-sm text-gray-500">{{ props.label }}</div>
     <select
       class="selector-select text-sm bg-gray-100 p-2 rounded-lg"
-      v-model="selectedOption"
+      :value="props.selectedOption || props.options[0].value"
       @change="handleFilterChange($event.target.value)"
     >
       <option
@@ -19,17 +19,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineProps } from 'vue'
-
 const emit = defineEmits(['selectChange'])
 
 const props = defineProps({
   options: { type: Array },
-  label: { type: String }
+  label: { type: String },
+  selectedOption: { type: String }
 })
-
-// Set default value
-const selectedOption = ref(props.options[0].value)
 
 const handleFilterChange = (value: String) => {
   emit('selectChange', value)
