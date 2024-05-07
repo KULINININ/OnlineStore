@@ -1,10 +1,7 @@
 <template>
   <div class="item-footer mt-2 flex inline justify-between items-center">
     <div class="item-price flex inline text-sm">
-      <div
-        class="item-price-old text-gray-500 line-through mr-2"
-        v-if="props.old_price"
-      >
+      <div class="item-price-old text-gray-500 line-through mr-2" v-if="props.old_price">
         {{ Math.floor(props.old_price) + '₽' }}
       </div>
       <div class="item-price-current">
@@ -21,9 +18,7 @@
       >
         <IconShoppingCart />
       </button>
-      <button
-        class="item-actions-like__button ml-2 transition duration-300 hover:scale-150"
-      >
+      <button class="item-actions-like__button ml-2 transition duration-300 hover:scale-150">
         <IconHeart />
       </button>
     </div>
@@ -31,8 +26,6 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps } from 'vue'
-
 import IconCheckCircle from '../../assets/icons/IconCheckCircle.vue'
 import IconShoppingCart from '../../assets/icons/IconShoppingCart.vue'
 import IconHeart from '../../assets/icons/IconHeart.vue'
