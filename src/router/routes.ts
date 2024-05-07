@@ -9,6 +9,20 @@ export const routes: RouteRecordRaw[] = [
   {
     path: '/catalog',
     name: 'catalog',
-    component: () => import('../pages/TheCatalog.vue')
+    redirect: '/catalog/sistemy-hraneniya',
+    children: [
+      {
+        path: 'sistemy-hraneniya',
+        name: 'sistemy-hraneniya',
+        redirect: '/catalog/sistemy-hraneniya/komplekty-stellazhnyh-sistem',
+        children: [
+          {
+            path: 'komplekty-stellazhnyh-sistem',
+            name: 'komplekty-stellazhnyh-sistem',
+            component: () => import('../pages/TheCatalog.vue')
+          }
+        ]
+      }
+    ]
   }
 ]
