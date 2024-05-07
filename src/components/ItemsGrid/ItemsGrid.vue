@@ -8,7 +8,7 @@
     <div v-else v-for="item in items" :key="item.id" class="items-grid__item-wrapper flex grow">
       <ItemCard :item="item">
         <template v-slot:label>
-          <ItemCardLabel :labelText="'Скидка'" />
+          <ItemCardLabel :labelData="item?.labelData" />
         </template>
         <template v-slot:pictures>
           <ItemCardPictures :src="item?.image?.url" :alt="item?.name" />
