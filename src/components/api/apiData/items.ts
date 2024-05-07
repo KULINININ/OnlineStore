@@ -12,7 +12,11 @@ export const items: ItemData[] = [
     image: {
       url: 'door_knob.png'
     },
-    material: 1
+    material: 1,
+    labelData: {
+      labelText: 'Скидка',
+      type: 'sale'
+    }
   },
   {
     id: '8',
@@ -25,7 +29,11 @@ export const items: ItemData[] = [
     image: {
       url: 'hinges_lock.png'
     },
-    material: 2
+    material: 2,
+    labelData: {
+      labelText: 'Скидка',
+      type: 'sale'
+    }
   },
   {
     id: '2',
@@ -38,7 +46,11 @@ export const items: ItemData[] = [
     image: {
       url: 'stainless_door_knob.png'
     },
-    material: 2
+    material: 2,
+    labelData: {
+      labelText: 'Скидка',
+      type: 'sale'
+    }
   },
   {
     id: '3',
@@ -51,7 +63,11 @@ export const items: ItemData[] = [
     image: {
       url: 'hinges_standart.png'
     },
-    material: 2
+    material: 2,
+    labelData: {
+      labelText: 'Популярное',
+      type: 'popular'
+    }
   },
   {
     id: '4',
@@ -64,7 +80,11 @@ export const items: ItemData[] = [
     image: {
       url: 'hinges_lock.png'
     },
-    material: 2
+    material: 2,
+    labelData: {
+      labelText: 'Скидка',
+      type: 'sale'
+    }
   },
   {
     id: '5',
@@ -77,7 +97,11 @@ export const items: ItemData[] = [
     image: {
       url: 'door_knob.png'
     },
-    material: 1
+    material: 1,
+    labelData: {
+      labelText: 'Эко',
+      type: 'eco'
+    }
   },
   {
     id: '6',
@@ -116,6 +140,10 @@ export const items: ItemData[] = [
     image: {
       url: 'hinges_lock.png'
     },
-    material: 2
+    material: 2,
+    labelData: {
+      labelText: 'Скидка',
+      type: 'sale'
+    }
   }
 ]
