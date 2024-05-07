@@ -10,4 +10,8 @@ export interface ItemData {
     url: string
   }
   material: number
+  labelData?: {
+    labelText: String
+    type: String
+  }
 }
