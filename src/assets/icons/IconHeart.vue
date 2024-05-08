@@ -6,6 +6,7 @@
     stroke-width="1.5"
     stroke="currentColor"
     class="w-5 h-5 hover:fill-[#eb5757] hover:stroke-[#eb5757]"
+    :class="{ 'fill-[#eb5757] stroke-[#eb5757]': props.active }"
   >
     <path
       stroke-linecap="round"
@@ -14,3 +15,9 @@
     />
   </svg>
 </template>
+
+<script setup lang="ts">
+const props = defineProps({
+  active: { type: Boolean }
+})
+</script>
