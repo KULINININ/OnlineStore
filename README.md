@@ -1,6 +1,16 @@
-# OnlineStore
+# Описание
 
-This template should help get you started developing with Vue 3 in Vite.
+Небольшой пет-проект для практики по Vue 3 Coposition API и TypeScript.
+
+Задеплоено тут -> https://kulininin.github.io/OnlineStore/
+
+- Vue 3 (Coposition API)
+- TypeScript
+- Vue-Router
+- Pinia
+- Vite
+- Tailwind
+- Prettier
 
 ## Recommended IDE Setup
 
