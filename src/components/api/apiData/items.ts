@@ -19,23 +19,6 @@ export const items: ItemData[] = [
     }
   },
   {
-    id: '8',
-    name: 'Петля со стопором',
-    code: null,
-    price: {
-      old_price: 1200,
-      current_price: 900
-    },
-    image: {
-      url: 'hinges_lock.png'
-    },
-    material: 2,
-    labelData: {
-      labelText: 'Скидка',
-      type: 'sale'
-    }
-  },
-  {
     id: '2',
     name: 'Ручка, нержавеющ сталь',
     code: 'L423WH',
@@ -131,6 +114,23 @@ export const items: ItemData[] = [
   },
   {
     id: '8',
+    name: 'Петля со стопором',
+    code: null,
+    price: {
+      old_price: 1200,
+      current_price: 900
+    },
+    image: {
+      url: 'hinges_lock.png'
+    },
+    material: 2,
+    labelData: {
+      labelText: 'Скидка',
+      type: 'sale'
+    }
+  },
+  {
+    id: '9',
     name: 'Петля со стопором',
     code: null,
     price: {
