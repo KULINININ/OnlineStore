@@ -1,6 +1,6 @@
 <template>
   <div class="item-pictures">
-    <img :src="'/src/assets/pictures/' + props.src" :alt="props.alt" />
+    <img :src="'/OnlineStore/pictures/' + props.src" :alt="props.alt" />
   </div>
 </template>
 
