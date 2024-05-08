@@ -23,6 +23,10 @@
           <ItemCardFooter
             :old_price="item?.price?.old_price || undefined"
             :current_price="item?.price?.current_price"
+            :liked="isLiked(item.id)"
+            :inCart="inCart(item.id)"
+            @like="toggleLike(item.id)"
+            @toCart="toggleToCart(item.id)"
           />
         </template>
       </ItemCard>
@@ -31,7 +35,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, computed } from 'vue'
+import { computed, ref } from 'vue'
 
 import ItemCard from '../ItemCard/ItemCard.vue'
 import ItemCardLabel from '../ItemCard/ItemCardLabel.vue'
@@ -51,5 +55,34 @@ let isLoading = computed(() => {
   return itemsStore.loading
 })
 
-onMounted(() => {})
+const likedItems = ref<string[]>(JSON.parse(localStorage.getItem('likedItems') || '[]'))
+const inCartItems = ref<string[]>(JSON.parse(localStorage.getItem('inCartItems') || '[]'))
+
+const isLiked = (id: string) => {
+  return likedItems.value.includes(id)
+}
+
+const inCart = (id: string) => {
+  return inCartItems.value.includes(id)
+}
+
+const toggleLike = (id: string) => {
+  if (isLiked(id)) {
+    likedItems.value.splice(likedItems.value.indexOf(id), 1)
+  } else {
+    likedItems.value.push(id)
+  }
+
+  localStorage.setItem('likedItems', JSON.stringify(likedItems.value))
+}
+
+const toggleToCart = (id: string) => {
+  if (inCart(id)) {
+    inCartItems.value.splice(inCartItems.value.indexOf(id), 1)
+  } else {
+    inCartItems.value.push(id)
+  }
+
+  localStorage.setItem('inCartItems', JSON.stringify(inCartItems.value))
+}
 </script>
