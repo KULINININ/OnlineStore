@@ -1,5 +1,11 @@
 <template>
   <div class="catalog container mx-auto m-auto space-y-4">
+    <div class="catalog-breadcrumbs text-sm text-gray-500">
+      <BaseBreadcrumbs :path="routePath" />
+    </div>
+    <div class="catalog-page-title text-3xl">
+      {{ EnumRouteName[routePath[routePath.length - 1]] }}
+    </div>
     <div class="items-filters flex inline space-x-4">
       <BaseSelector
         class="items-filters__selector-order"
@@ -27,6 +33,8 @@ import { useRouter } from 'vue-router'
 
 import ItemsGrid from '../components/ItemsGrid/ItemsGrid.vue'
 import BaseSelector from '../components/Base/BaseSelector.vue'
+import BaseBreadcrumbs from '../components/Base/BaseBreadcrumbs.vue'
+import { EnumRouteName } from '../enums/EnumRouteName.ts'
 
 import { useItemsStore } from '../stores/items'
 
@@ -35,6 +43,8 @@ const router = useRouter()
 
 let selectedMaterial = ref()
 let selectedOrder = ref()
+
+const routePath = router.currentRoute.value.path.split('/').slice(1)
 
 const orderOptions = [
   {
