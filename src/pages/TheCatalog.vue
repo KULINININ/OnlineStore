@@ -87,12 +87,12 @@ const materialOptions = [
   }
 ]
 
-const handleOrderChange = (order: String) => {
+const handleOrderChange = (order: string) => {
   const newQuery = { ...router.currentRoute.value.query, order: order }
   router.replace({ query: newQuery })
   itemsStore.sortItems(order)
 }
-const handleMaterialChange = (material: String) => {
+const handleMaterialChange = (material: string) => {
   const newQuery = { ...router.currentRoute.value.query, material: material }
   router.replace({ query: newQuery })
   itemsStore.filterItems(material)

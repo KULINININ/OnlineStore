@@ -6,7 +6,7 @@ import { materials } from '../../components/api/apiData/materials'
 
 export class ApiEmulator {
   private items: ItemData[] = []
-  private orderBy: String
+  private orderBy: string
 
   async getItems(): Promise<ItemData[]> {
     return new Promise((resolve) => {
@@ -17,7 +17,7 @@ export class ApiEmulator {
     })
   }
 
-  async orderItems(orderBy: String): Promise<ItemData[]> {
+  async orderItems(orderBy: string): Promise<ItemData[]> {
     return new Promise((resolve) => {
       setTimeout(() => {
         if (orderBy === 'cheapest') {
@@ -32,7 +32,7 @@ export class ApiEmulator {
     })
   }
 
-  async filterItems(filterBy: String): Promise<ItemData[]> {
+  async filterItems(filterBy: string): Promise<ItemData[]> {
     return new Promise((resolve) => {
       setTimeout(() => {
         if (filterBy === 'all') {

@@ -11,7 +11,7 @@ export interface ItemData {
   }
   material: number
   labelData?: {
-    labelText: String
-    type: String
+    labelText: string
+    type: string
   }
 }

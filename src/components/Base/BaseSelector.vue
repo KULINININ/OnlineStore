@@ -27,7 +27,7 @@ const props = defineProps({
   selectedOption: { type: String }
 })
 
-const handleFilterChange = (value: String) => {
+const handleFilterChange = (value: string) => {
   emit('selectChange', value)
 }
 </script>
