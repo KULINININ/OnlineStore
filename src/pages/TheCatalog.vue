@@ -11,15 +11,13 @@
         class="items-filters__selector-order"
         label="Order by:"
         :options="orderOptions"
-        :selectedOption="selectedOrder"
-        @selectChange="handleOrderChange"
+        v-model:selectedOption="selectedOrder"
       />
       <BaseSelector
         class="items-filters__selector-material"
         label="Material:"
         :options="materialOptions"
-        :selectedOption="selectedMaterial"
-        @selectChange="handleMaterialChange"
+        v-model:selectedOption="selectedMaterial"
       />
     </div>
     <div class="items-grid__wrapper">
@@ -28,7 +26,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 
 import ItemsGrid from '../components/ItemsGrid/ItemsGrid.vue'
@@ -116,5 +114,11 @@ itemsStore.loadItems().then(() => {
   applyQueryFilters()
 })
 
-onMounted(() => {})
+watch(selectedOrder, (newValue, oldValue) => {
+  handleOrderChange(newValue)
+})
+
+watch(selectedMaterial, (newValue, oldValue) => {
+  handleMaterialChange(newValue)
+})
 </script>

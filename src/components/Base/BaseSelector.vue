@@ -4,7 +4,7 @@
     <select
       class="selector-select text-sm bg-gray-100 p-2 rounded-lg"
       :value="props.selectedOption || props.options[0].value"
-      @change="handleFilterChange($event.target.value)"
+      @change="emit('update:selectedOption', $event.target.value)"
     >
       <option
         class="selector-select__option"
@@ -19,15 +19,11 @@
 </template>
 
 <script setup lang="ts">
-const emit = defineEmits(['selectChange'])
+const emit = defineEmits(['update:selectedOption'])
 
 const props = defineProps({
   options: { type: Array },
   label: { type: String },
   selectedOption: { type: String }
 })
-
-const handleFilterChange = (value: string) => {
-  emit('selectChange', value)
-}
 </script>
