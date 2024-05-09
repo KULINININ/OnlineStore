@@ -14,7 +14,7 @@
 import { EnumRouteName } from '../../enums/EnumRouteName.ts'
 
 const props = defineProps({
-  path: { type: Array }
+  path: { type: Array, required: true }
 })
 </script>
 
