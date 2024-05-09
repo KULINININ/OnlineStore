@@ -9,13 +9,13 @@
     <div class="items-filters flex inline space-x-4">
       <BaseSelector
         class="items-filters__selector-order"
-        label="Order by:"
+        label="Сортировка:"
         :options="orderOptions"
         v-model:selectedOption="selectedOrder"
       />
       <BaseSelector
         class="items-filters__selector-material"
-        label="Material:"
+        label="Материал:"
         :options="materialOptions"
         v-model:selectedOption="selectedMaterial"
       />
@@ -48,22 +48,22 @@ const orderOptions = [
   {
     id: 1,
     value: 'popular',
-    label: 'Popular'
+    label: 'Популярные'
   },
   {
     id: 2,
     value: 'new',
-    label: 'New'
+    label: 'Новые'
   },
   {
     id: 3,
     value: 'cheapest',
-    label: 'Cheapest'
+    label: 'Цена по возрастанию'
   },
   {
     id: 4,
     value: 'expensive',
-    label: 'Expensive'
+    label: 'Цена по убыванию'
   }
 ]
 
@@ -71,17 +71,17 @@ const materialOptions = [
   {
     id: 1,
     value: 'all',
-    label: 'All'
+    label: 'Все'
   },
   {
     id: 2,
     value: 'wood',
-    label: 'Wood'
+    label: 'Дерево'
   },
   {
     id: 3,
     value: 'metal',
-    label: 'Metal'
+    label: 'Металл'
   }
 ]
 
