@@ -24,12 +24,15 @@
       <ItemsGrid />
     </div>
     <div class="catalog-pagination">
-      <BasePagination />
+      <BasePagination
+        :class="{ 'pointer-events-none opacity-50': isLoading }"
+        v-model:currentPage="currentPage"
+      />
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, watch, computed } from 'vue'
 import { useRouter } from 'vue-router'
 
 import ItemsGrid from '../components/ItemsGrid/ItemsGrid.vue'
@@ -45,6 +48,7 @@ const router = useRouter()
 
 let selectedMaterial = ref()
 let selectedOrder = ref()
+let currentPage = ref(1)
 
 const routePath = router.currentRoute.value.path.split('/').slice(1)
 
@@ -100,8 +104,14 @@ const handleMaterialChange = (material: string) => {
   itemsStore.filterItems(material)
 }
 
+const handlePageChange = (page: number) => {
+  itemsStore.loadItemsByPage(page).then(() => {})
+  const newQuery = { ...router.currentRoute.value.query, page: page }
+  router.replace({ query: newQuery })
+}
+
 const applyQueryFilters = () => {
-  const { order, material } = router.currentRoute.value.query
+  const { order, material, page } = router.currentRoute.value.query
 
   if (material) {
     itemsStore.filterItems(material)
@@ -111,12 +121,10 @@ const applyQueryFilters = () => {
     itemsStore.orderItems(order)
     selectedOrder.value = order
   }
+  if (page) {
+    itemsStore.loadItemsByPage(page)
+  }
 }
-
-// Load items from API
-itemsStore.loadItems().then(() => {
-  applyQueryFilters()
-})
 
 watch(selectedOrder, (newValue, oldValue) => {
   handleOrderChange(newValue)
@@ -125,4 +133,16 @@ watch(selectedOrder, (newValue, oldValue) => {
 watch(selectedMaterial, (newValue, oldValue) => {
   handleMaterialChange(newValue)
 })
+
+watch(currentPage, (newValue, oldValue) => {
+  handlePageChange(newValue)
+})
+
+// Load items from API
+itemsStore.loadItems().then(() => {
+  // console.log(itemsStore.items)
+  applyQueryFilters()
+})
+
+const isLoading = computed(() => itemsStore.loading)
 </script>
