@@ -1,6 +1,6 @@
 <template>
   <div
-    class="item-card bg-white p-20 mb-6 shadow transition duration-300 group transform hover:-translate-y-2 hover:shadow-2xl rounded-2xl cursor-wait border justify-center flex items-center"
+    class="item-card bg-white p-20 mb-6 shadow transition duration-300 transform hover:-translate-y-2 hover:shadow-2xl rounded-2xl cursor-wait border justify-center flex items-center"
   >
     <svg
       xmlns="http://www.w3.org/2000/svg"
