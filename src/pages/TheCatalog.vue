@@ -92,7 +92,7 @@ const materialOptions = [
 const handleOrderChange = (order: string) => {
   const newQuery = { ...router.currentRoute.value.query, order: order }
   router.replace({ query: newQuery })
-  itemsStore.sortItems(order)
+  itemsStore.orderItems(order)
 }
 const handleMaterialChange = (material: string) => {
   const newQuery = { ...router.currentRoute.value.query, material: material }
@@ -108,7 +108,7 @@ const applyQueryFilters = () => {
     selectedMaterial.value = material
   }
   if (order) {
-    itemsStore.sortItems(order)
+    itemsStore.orderItems(order)
     selectedOrder.value = order
   }
 }

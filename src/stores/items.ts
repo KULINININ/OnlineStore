@@ -21,7 +21,7 @@ export const useItemsStore = defineStore('items', {
       this.items = await apiEmulator.filterItems(filterBy)
       this.loading = false
     },
-    async sortItems(orderBy: string) {
+    async orderItems(orderBy: string) {
       this.loading = true
       this.items = await apiEmulator.orderItems(orderBy)
       this.loading = false
