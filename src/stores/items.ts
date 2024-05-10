@@ -26,6 +26,11 @@ export const useItemsStore = defineStore('items', {
       this.items = await apiEmulator.loadItemsByPage(page)
       this.loading = false
     },
+    async loadMoreItems(page: number) {
+      this.loading = true
+      this.items = this.items.concat(await apiEmulator.loadMoreItems(page))
+      this.loading = false
+    },
     async filterItems(filterBy: string) {
       this.loading = true
       this.items = await apiEmulator.filterItems(filterBy)

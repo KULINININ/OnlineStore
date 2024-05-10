@@ -35,6 +35,22 @@ export class ApiEmulator {
     })
   }
 
+  async loadMoreItems(page: number): Promise<ItemData[]> {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const clonedItems = JSON.parse(JSON.stringify(items))
+
+        clonedItems.forEach((item, index) => {
+          item.id = `${page}${index + 1}`
+        })
+
+        const shuffledItems = shuffle(clonedItems)
+
+        resolve(shuffledItems)
+      }, 500)
+    })
+  }
+
   async orderItems(orderBy: string): Promise<ItemData[]> {
     return new Promise((resolve) => {
       setTimeout(() => {
