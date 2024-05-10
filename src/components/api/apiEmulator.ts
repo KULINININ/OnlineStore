@@ -4,6 +4,8 @@ import type { Material } from '../../types/material'
 import { items } from '../../components/api/apiData/items'
 import { materials } from '../../components/api/apiData/materials'
 
+import { shuffle } from 'lodash'
+
 export class ApiEmulator {
   private items: ItemData[] = []
   private orderBy: string
@@ -13,6 +15,22 @@ export class ApiEmulator {
       setTimeout(() => {
         this.items = items
         resolve(items)
+      }, 500)
+    })
+  }
+
+  async loadItemsByPage(page: number): Promise<ItemData[]> {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const clonedItems = JSON.parse(JSON.stringify(items))
+
+        clonedItems.forEach((item, index) => {
+          item.id = `${page}${index + 1}`
+        })
+
+        const shuffledItems = shuffle(clonedItems)
+
+        resolve(shuffledItems)
       }, 500)
     })
   }
