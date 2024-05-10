@@ -2,10 +2,12 @@
   <div
     class="items-grid grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 text-center m-auto"
   >
-    <div v-if="isLoading" v-for="id in 10" :key="id" class="items-grid__item-wrapper">
-      <ItemCardSkeleton />
-    </div>
-    <div v-else v-for="item in items" :key="item.id" class="items-grid__item-wrapper flex grow">
+    <div
+      v-if="!isLoading"
+      v-for="item in items"
+      :key="item.id"
+      class="items-grid__item-wrapper flex grow"
+    >
       <ItemCard :item="item">
         <template v-slot:label>
           <ItemCardLabel :labelData="item?.labelData" />
@@ -30,6 +32,14 @@
           />
         </template>
       </ItemCard>
+    </div>
+    <div
+      v-else-if="isLoading"
+      v-for="id in items.length"
+      :key="id"
+      class="items-grid__item-wrapper"
+    >
+      <ItemCardSkeleton />
     </div>
   </div>
 </template>
