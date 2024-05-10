@@ -1,12 +1,12 @@
 <template>
-  <div class="catalog container mx-auto m-auto space-y-4">
+  <div class="catalog container m-auto space-y-4">
     <div class="catalog-breadcrumbs text-sm text-gray-500">
       <BaseBreadcrumbs :path="routePath" />
     </div>
     <div class="catalog-page-title text-3xl">
       {{ EnumRouteName[routePath[routePath.length - 1]] }}
     </div>
-    <div class="items-filters flex inline space-x-4">
+    <div class="catalog-items-filters flex inline space-x-4">
       <BaseSelector
         class="items-filters__selector-order"
         label="Сортировка:"
@@ -20,8 +20,11 @@
         v-model:selectedOption="selectedMaterial"
       />
     </div>
-    <div class="items-grid__wrapper">
+    <div class="catalog-items-grid__wrapper">
       <ItemsGrid />
+    </div>
+    <div class="catalog-pagination">
+      <BasePagination />
     </div>
   </div>
 </template>
@@ -33,6 +36,7 @@ import ItemsGrid from '../components/ItemsGrid/ItemsGrid.vue'
 import BaseSelector from '../components/Base/BaseSelector.vue'
 import BaseBreadcrumbs from '../components/Base/BaseBreadcrumbs.vue'
 import { EnumRouteName } from '../enums/EnumRouteName.ts'
+import BasePagination from '../components/Base/BasePagination/BasePagination.vue'
 
 import { useItemsStore } from '../stores/items'
 
