@@ -1,11 +1,11 @@
 <template>
-  <div class="pagination__wrapper flex inline" :class="{ 'pointer-events-none opacity-50': false }">
+  <div class="pagination__wrapper flex inline justify-center">
     <BasePaginationButtonList
       class="pagination-button-list__wrapper-left"
       v-if="leftSideButtonsCount > 0"
       :buttonsCount="leftSideButtonsCount"
       :startPage="leftSideStartPage"
-      :currentPage="currentPage"
+      :currentPage="props.currentPage"
       @click="goToPage"
     />
     <span
@@ -18,7 +18,7 @@
       v-if="middleButtonsCount > 0"
       :buttonsCount="middleButtonsCount"
       :startPage="middleStartPage"
-      :currentPage="currentPage"
+      :currentPage="props.currentPage"
       @click="goToPage"
     />
     <span
@@ -31,14 +31,14 @@
       v-if="rightSideButtonsCount > 0"
       :buttonsCount="rightSideButtonsCount"
       :startPage="rightSideStartPage"
-      :currentPage="currentPage"
+      :currentPage="props.currentPage"
       @click="goToPage"
     />
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, onBeforeUnmount, ref } from 'vue'
+import { onMounted, onBeforeUnmount, ref, defineEmits, watch } from 'vue'
 import BasePaginationButtonList from './BasePaginationButtonList.vue'
 
 const pageCount = 40
@@ -50,16 +50,26 @@ const rightSideButtonsCount = ref(0)
 const rightSideStartPage = ref(0)
 const needLeftDevider = ref(false)
 const needRightDevider = ref(false)
-const currentPage = ref(0)
+
+const emit = defineEmits(['update:currentPage'])
+const props = defineProps({
+  currentPage: { type: Number, default: 1 }
+})
+
+watch(
+  () => props.currentPage,
+  () => {
+    updatePagination()
+  }
+)
 
 const goToPage = (page: number) => {
-  currentPage.value = page
-  updatePagination()
+  emit('update:currentPage', page)
 }
 
 const updatePagination = () => {
   if (pageCount >= 9) {
-    if (currentPage.value <= 5) {
+    if (props.currentPage <= 5) {
       console.log('left')
       leftSideButtonsCount.value = 6
       leftSideStartPage.value = 1
@@ -71,21 +81,21 @@ const updatePagination = () => {
       rightSideButtonsCount.value = 1
       rightSideStartPage.value = pageCount
       needRightDevider.value = true
-    } else if (currentPage.value > 5 && currentPage.value < pageCount - 4) {
+    } else if (props.currentPage > 5 && props.currentPage < pageCount - 4) {
       console.log('middle')
       leftSideButtonsCount.value = 1
       leftSideStartPage.value = 1
       needLeftDevider.value = true
 
       middleButtonsCount.value = 5
-      middleStartPage.value = currentPage.value - 2
+      middleStartPage.value = props.currentPage - 2
 
       rightSideButtonsCount.value = 1
       rightSideStartPage.value = pageCount
       needRightDevider.value = true
     }
 
-    if (currentPage.value >= pageCount - 4) {
+    if (props.currentPage >= pageCount - 4) {
       console.log('right')
       leftSideButtonsCount.value = 1
       leftSideStartPage.value = 1
