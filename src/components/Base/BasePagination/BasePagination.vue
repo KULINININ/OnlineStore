@@ -1,5 +1,8 @@
 <template>
-  <div class="pagination__wrapper flex inline justify-center">
+  <div
+    v-if="props.paginationMode === 'page'"
+    class="pagination__wrapper flex inline justify-center"
+  >
     <BasePaginationButtonList
       class="pagination-button-list__wrapper-left"
       v-if="leftSideButtonsCount > 0"
@@ -39,6 +42,8 @@
 
 <script setup lang="ts">
 import { onMounted, onBeforeUnmount, ref, defineEmits, watch } from 'vue'
+import { debounce } from 'lodash'
+
 import BasePaginationButtonList from './BasePaginationButtonList.vue'
 
 const pageCount = 40
@@ -53,7 +58,8 @@ const needRightDevider = ref(false)
 
 const emit = defineEmits(['update:currentPage'])
 const props = defineProps({
-  currentPage: { type: Number, default: 1 }
+  currentPage: { type: Number, default: 1 },
+  paginationMode: { type: String, default: 'page' }
 })
 
 watch(
@@ -70,7 +76,6 @@ const goToPage = (page: number) => {
 const updatePagination = () => {
   if (pageCount >= 9) {
     if (props.currentPage <= 5) {
-      console.log('left')
       leftSideButtonsCount.value = 6
       leftSideStartPage.value = 1
       needLeftDevider.value = false
@@ -82,7 +87,6 @@ const updatePagination = () => {
       rightSideStartPage.value = pageCount
       needRightDevider.value = true
     } else if (props.currentPage > 5 && props.currentPage < pageCount - 4) {
-      console.log('middle')
       leftSideButtonsCount.value = 1
       leftSideStartPage.value = 1
       needLeftDevider.value = true
@@ -96,7 +100,6 @@ const updatePagination = () => {
     }
 
     if (props.currentPage >= pageCount - 4) {
-      console.log('right')
       leftSideButtonsCount.value = 1
       leftSideStartPage.value = 1
       needLeftDevider.value = true
@@ -114,23 +117,25 @@ const updatePagination = () => {
   }
 }
 
-const handleScroll = () => {
+const debouncedHandleScroll = debounce(() => {
+  if (props.paginationMode !== 'scroll') return
+
   const scrolledToBottom: boolean =
     Math.max(window.scrollY, document.documentElement.scrollTop, document.body.scrollTop) +
       window.innerHeight >=
     document.documentElement.offsetHeight
 
   if (scrolledToBottom) {
-    console.log('User scrolled to the end of the page')
+    emit('update:currentPage', props.currentPage + 1)
   }
-}
+}, 500)
 
 onMounted(() => {
-  window.addEventListener('scroll', handleScroll)
+  window.addEventListener('scroll', debouncedHandleScroll)
 })
 
 onBeforeUnmount(() => {
-  window.removeEventListener('scroll', handleScroll)
+  window.removeEventListener('scroll', debouncedHandleScroll)
 })
 
 updatePagination()
