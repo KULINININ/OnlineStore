@@ -20,12 +20,17 @@
         v-model:selectedOption="selectedMaterial"
       />
     </div>
+    <div class="catalog-items-pagination-selector flex inline space-x-4 items-center">
+      <BaseSwitcher v-model:checked="paginationModeSwitcher" />
+      <div class="catalog-items-pagination-selector__text align-center">Бесконечная пагинация</div>
+    </div>
     <div class="catalog-items-grid__wrapper">
       <ItemsGrid />
     </div>
     <div class="catalog-pagination">
       <BasePagination
         :class="{ 'pointer-events-none opacity-50': isLoading }"
+        :paginationMode="paginationMode"
         v-model:currentPage="currentPage"
       />
     </div>
@@ -40,15 +45,20 @@ import BaseSelector from '../components/Base/BaseSelector.vue'
 import BaseBreadcrumbs from '../components/Base/BaseBreadcrumbs.vue'
 import { EnumRouteName } from '../enums/EnumRouteName.ts'
 import BasePagination from '../components/Base/BasePagination/BasePagination.vue'
+import BaseSwitcher from '../components/Base/BaseSwitcher.vue'
 
 import { useItemsStore } from '../stores/items'
+import { useOptionsStore } from '../stores/options.ts'
 
 const itemsStore = useItemsStore()
+const optionsStore = useOptionsStore()
 const router = useRouter()
 
-let selectedMaterial = ref()
-let selectedOrder = ref()
-let currentPage = ref(1)
+const selectedMaterial = ref()
+const selectedOrder = ref()
+const currentPage = ref(1)
+const paginationMode = ref('page')
+const paginationModeSwitcher = ref(false)
 
 const routePath = router.currentRoute.value.path.split('/').slice(1)
 
@@ -103,11 +113,14 @@ const handleMaterialChange = (material: string) => {
   router.replace({ query: newQuery })
   itemsStore.filterItems(material)
 }
-
 const handlePageChange = (page: number) => {
-  itemsStore.loadItemsByPage(page).then(() => {})
   const newQuery = { ...router.currentRoute.value.query, page: page }
   router.replace({ query: newQuery })
+  if (paginationMode.value === 'scroll') {
+    itemsStore.loadMoreItems(page)
+  } else if (paginationMode.value === 'page') {
+    itemsStore.loadItemsByPage(page)
+  }
 }
 
 const applyQueryFilters = () => {
@@ -122,8 +135,19 @@ const applyQueryFilters = () => {
     selectedOrder.value = order
   }
   if (page) {
-    itemsStore.loadItemsByPage(page)
+    currentPage.value = Number(page)
+    itemsStore.loadItemsByPage(Number(page))
   }
+}
+
+const switchPaginationMode = () => {
+  if (paginationModeSwitcher.value === true) {
+    paginationMode.value = 'scroll'
+  } else if (paginationModeSwitcher.value === false) {
+    paginationMode.value = 'page'
+  }
+
+  localStorage.setItem('options', JSON.stringify({ paginationMode: paginationMode.value }))
 }
 
 watch(selectedOrder, (newValue, oldValue) => {
@@ -138,11 +162,18 @@ watch(currentPage, (newValue, oldValue) => {
   handlePageChange(newValue)
 })
 
+watch(paginationModeSwitcher, (newValue, oldValue) => {
+  switchPaginationMode()
+})
+
 // Load items from API
 itemsStore.loadItems().then(() => {
-  // console.log(itemsStore.items)
   applyQueryFilters()
 })
 
 const isLoading = computed(() => itemsStore.loading)
+
+// Restore pagination mode from localStorage
+paginationMode.value = optionsStore.paginationMode
+paginationModeSwitcher.value = optionsStore.paginationMode === 'scroll'
 </script>
