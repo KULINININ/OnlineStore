@@ -8,7 +8,7 @@ describe('ItemsGrid', () => {
   let wrapper
   let itemsStore
 
-  beforeEach(() => {
+  beforeEach(async () => {
     const pinia = createPinia()
     wrapper = mount(ItemsGrid, {
       global: {
@@ -16,6 +16,7 @@ describe('ItemsGrid', () => {
       }
     })
     itemsStore = useItemsStore()
+    await itemsStore.loadItems()
   })
 
   it('renders ItemGrid', async () => {
@@ -23,8 +24,6 @@ describe('ItemsGrid', () => {
   })
 
   it('renders items in ItemGrid', async () => {
-    await itemsStore.loadItems()
-
     const itemsCount = wrapper.findAll('.items-grid__item-wrapper')
     expect(itemsCount.length).toBeGreaterThan(0)
   })
